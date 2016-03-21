@@ -1,0 +1,55 @@
+{
+  "configuration": {
+    "name": "Default",
+    "properties": {
+      "property": [
+        {
+          "name": "directory",
+          "value": "${sys:user.home}/log4j/route-manager"
+        },
+        {
+          "name": "filename",
+          "value": "route-manager.log"
+        }
+      ]
+    },
+    "appenders": {
+      "Console": {
+        "name": "Console",
+        "target": "SYSTEM_OUT",
+        "PatternLayout": {
+          "pattern": "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        }
+      },
+      "RollingFile": {
+        "name": "File",
+        "fileName": "${directory}/${filename}",
+        "filePattern": "${directory}/${date:yyyy-MM-dd}/route-manager-%d{MM-dd-yyyy}-%i.log.gz",
+        "PatternLayout": {
+          "pattern": "%d %p %logger{36} [%t] %m%n"
+        },
+        "Policies": {
+          "SizeBasedTriggeringPolicy": {
+            "size": "10 MB"
+          }
+        },
+        "DefaultRolloverStrategy": {
+          "max": "10"
+        }
+      }
+    },
+    "loggers": {
+      "root": {
+        "level": "INFO",
+        "appender-ref": [
+          {
+            "ref": "File"
+          },
+          {
+            "ref": "Console"
+          }
+        ]
+      }
+    }
+  }
+}

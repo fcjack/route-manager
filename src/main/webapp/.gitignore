@@ -1,0 +1,5 @@
+src/build.min.js
+src/style/build/*
+src/vendor/
+node_modules/
+.idea/
