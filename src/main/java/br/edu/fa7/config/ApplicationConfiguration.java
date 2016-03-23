@@ -52,6 +52,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
     public SpringLiquibase springLiquibase(ComboPooledDataSource comboPooledDataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(comboPooledDataSource);
+        liquibase.setDefaultSchema("route-manager");
         liquibase.setChangeLog("classpath:migration/changelog-master.xml");
         return liquibase;
     }

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "enterprise_customer")
 @PrimaryKeyJoinColumn(name = "customer_id")
-public class EnterpriseCustomer {
+public class EnterpriseCustomer extends Customer {
 
     private String cnpj;
 

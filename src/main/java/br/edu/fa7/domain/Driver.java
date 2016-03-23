@@ -1,6 +1,7 @@
 package br.edu.fa7.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.Set;
 
 /**
@@ -12,6 +13,7 @@ public class Driver extends AbstractEntity {
     private String name;
     private String registation;
 
+    @OneToMany(mappedBy = "plate")
     private Set<Vehicle> vehicles;
 
     public String getName() {
