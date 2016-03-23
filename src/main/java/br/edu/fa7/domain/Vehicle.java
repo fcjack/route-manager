@@ -1,11 +1,13 @@
 package br.edu.fa7.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by jackson on 3/23/16.
  */
 @Entity
+@Table(name = "vehicle", schema = "routeManager")
 public class Vehicle extends AbstractEntity {
 
     private String code;

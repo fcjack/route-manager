@@ -1,7 +1,6 @@
 package br.edu.fa7.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -11,9 +10,10 @@ import java.util.Set;
 public class Driver extends AbstractEntity {
 
     private String name;
-    private String registation;
+    private String registration;
 
-    @OneToMany(mappedBy = "plate")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "driver_vehicle", joinColumns = @JoinColumn(name = "driver_id"), inverseJoinColumns = @JoinColumn(name = "vehicle_id"))
     private Set<Vehicle> vehicles;
 
     public String getName() {
@@ -24,12 +24,12 @@ public class Driver extends AbstractEntity {
         this.name = name;
     }
 
-    public String getRegistation() {
-        return registation;
+    public String getRegistration() {
+        return registration;
     }
 
-    public void setRegistation(String registation) {
-        this.registation = registation;
+    public void setRegistration(String registration) {
+        this.registration = registration;
     }
 
     public Set<Vehicle> getVehicles() {

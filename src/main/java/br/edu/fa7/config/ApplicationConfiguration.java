@@ -12,12 +12,11 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.orm.jpa.vendor.Database;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
@@ -38,12 +37,15 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public ComboPooledDataSource comboPooledDataSource(RouteManagerSettings fortrixConfiguration) throws Exception {
+    public ComboPooledDataSource comboPooledDataSource(RouteManagerSettings routeManagerSettings) throws Exception {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         dataSource.setDriverClass(org.postgresql.Driver.class.getCanonicalName());
-        dataSource.setJdbcUrl(fortrixConfiguration.getDatabaseUrl());
-        dataSource.setUser(fortrixConfiguration.getDatabaseUser());
-        dataSource.setPassword(fortrixConfiguration.getDatabasePassword());
+        dataSource.setJdbcUrl(routeManagerSettings.getDatabaseUrl());
+        dataSource.setUser(routeManagerSettings.getDatabaseUser());
+        dataSource.setPassword(routeManagerSettings.getDatabasePassword());
+        dataSource.setAcquireIncrement(1);
+        dataSource.setInitialPoolSize(10);
+        dataSource.setMaxPoolSize(50);
 
         return dataSource;
     }
@@ -52,31 +54,27 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
     public SpringLiquibase springLiquibase(ComboPooledDataSource comboPooledDataSource) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(comboPooledDataSource);
-        liquibase.setDefaultSchema("route-manager");
+        liquibase.setDefaultSchema("routemanager");
         liquibase.setChangeLog("classpath:migration/changelog-master.xml");
         return liquibase;
     }
 
     @Bean
-    public LocalSessionFactoryBean entityManagerFactory(ComboPooledDataSource comboPooledDataSource) {
-        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
-        hibernateJpaVendorAdapter.setGenerateDdl(true);
-        hibernateJpaVendorAdapter.setShowSql(true);
-
+    public LocalSessionFactoryBean sessionFactory(ComboPooledDataSource comboPooledDataSource) throws IOException {
         LocalSessionFactoryBean entityManagerFactoryBean = new LocalSessionFactoryBean();
         entityManagerFactoryBean.setPackagesToScan("br.edu.fa7.domain");
         entityManagerFactoryBean.setDataSource(comboPooledDataSource);
 
         Properties properties = new Properties();
         properties.put("hibernate.dialect", PostgreSQL9Dialect.class.getCanonicalName());
-        properties.put("hibernate.default_schema", "route-manager");
+        properties.put("hibernate.default_schema", "routemanager");
         properties.put("hibernate.show_sql", true);
         properties.put("hibernate.format_sql", true);
         properties.put("hibernate.connection.autoReconnect", true);
         properties.put("hibernate.connection.autocommit", true);
         properties.put("hibernate.connection.release_mode", "after_transaction");
 
+        entityManagerFactoryBean.setHibernateProperties(properties);
         return entityManagerFactoryBean;
     }
 

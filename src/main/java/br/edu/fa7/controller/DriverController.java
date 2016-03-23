@@ -1,38 +1,41 @@
 package br.edu.fa7.controller;
 
-import org.postgresql.Driver;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import br.edu.fa7.dao.DriverDao;
+import br.edu.fa7.domain.Driver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/driver")
 public class DriverController {
 
-    @RequestMapping("/driver")
+    @Autowired
+    private DriverDao driverDao;
+
+    @RequestMapping
     public List<Driver> list() {
-        return null;
+        return driverDao.list();
     }
 
-    @RequestMapping("/driver/{id}")
+    @RequestMapping("/{id}")
     public Driver get(@PathVariable("id") Integer id) {
-        return null;
+        return driverDao.findById(id);
     }
 
-    @RequestMapping(value = "/driver", method = RequestMethod.POST)
-    public Driver create(Driver driver) {
-        return null;
+    @RequestMapping(method = RequestMethod.POST)
+    public void create(@RequestBody Driver driver) {
+        driverDao.save(driver);
     }
 
-    @RequestMapping(value = "/driver", method = RequestMethod.PUT)
-    public Driver update(Driver driver) {
-        return null;
+    @RequestMapping(method = RequestMethod.PUT)
+    public void update(@RequestBody Driver driver) {
+        driverDao.save(driver);
     }
 
-    @RequestMapping(value = "/driver/{id}", method = RequestMethod.DELETE)
-    public Boolean delete(@PathVariable("id") Integer id) {
-        return null;
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Integer id) {
+        driverDao.remove(id);
     }
 }
