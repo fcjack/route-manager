@@ -1,6 +1,8 @@
 package br.edu.fa7.config;
 
 import br.edu.fa7.interceptor.DeleteAuditingInterceptor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.hibernate.SessionFactory;
@@ -37,6 +39,13 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
         return new MappingJackson2HttpMessageConverter();
     }
 
+    @Bean
+    public ObjectMapper configureJacksonSerializationModule() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        return objectMapper;
+    }
     @Bean
     public ComboPooledDataSource comboPooledDataSource(RouteManagerSettings routeManagerSettings) throws Exception {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();

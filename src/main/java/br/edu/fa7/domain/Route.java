@@ -3,7 +3,6 @@ package br.edu.fa7.domain;
 import br.edu.fa7.enums.RouteStatus;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,11 +13,11 @@ public class Route extends AbstractEntity {
 
     private String code;
 
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private RouteStatus routeStatus;
 
-    private Date routeDate;
-
+    @OneToOne
     private Vehicle vehicle;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -26,7 +25,7 @@ public class Route extends AbstractEntity {
     @OrderColumn(name = "IDX")
     private List<Position> path;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "stops",
             joinColumns = @JoinColumn(name = "route_id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id")
@@ -40,14 +39,6 @@ public class Route extends AbstractEntity {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public Date getRouteDate() {
-        return routeDate;
-    }
-
-    public void setRouteDate(Date routeDate) {
-        this.routeDate = routeDate;
     }
 
     public RouteStatus getRouteStatus() {
@@ -64,5 +55,21 @@ public class Route extends AbstractEntity {
 
     public void setPath(List<Position> path) {
         this.path = path;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 }
