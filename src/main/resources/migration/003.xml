@@ -3,11 +3,11 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <!-- Cria as tabelas do sistema -->
-    <changeSet id="002" author="jackson">
-        <createTable tableName="table_of_sequence">
+    <changeSet id="003" author="rubens">
+        <createTable tableName="delete_auditing">
             <column name="entity" type="VARCHAR(30)"/>
-            <column name="next_id" type="INTEGER"/>
+            <column name="entity_id" type="INTEGER"/>
+            <column name="delete_date" type="DATETIME"></column>
         </createTable>
     </changeSet>
 </databaseChangeLog>

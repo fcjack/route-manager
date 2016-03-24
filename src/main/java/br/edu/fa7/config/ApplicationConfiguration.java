@@ -1,5 +1,6 @@
 package br.edu.fa7.config;
 
+import br.edu.fa7.interceptor.DeleteAuditingInterceptor;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.hibernate.SessionFactory;
