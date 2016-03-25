@@ -1,7 +1,8 @@
 package br.edu.fa7.domain;
 
 import br.edu.fa7.enums.StopStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
 public class Stop extends AbstractEntity {
 
     @OneToOne
-    @JsonIgnore
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Route route;
 
     @OneToOne

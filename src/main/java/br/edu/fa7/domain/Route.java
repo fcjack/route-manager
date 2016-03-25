@@ -25,8 +25,7 @@ public class Route extends AbstractEntity {
     @OrderColumn(name = "IDX")
     private List<Position> path;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "stop", joinColumns = @JoinColumn(name = "route_id"), inverseJoinColumns = @JoinColumn(name = "id"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "route", cascade = CascadeType.ALL)
     private List<Stop> stops;
 
     public String getCode() {
