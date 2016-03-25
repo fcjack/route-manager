@@ -21,17 +21,13 @@ public class Route extends AbstractEntity {
     private Vehicle vehicle;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "PATH", joinColumns = @JoinColumn(name = "ROUTE_ID"))
+    @CollectionTable(name = "PATH", joinColumns = @JoinColumn(name = "route_id"))
     @OrderColumn(name = "IDX")
     private List<Position> path;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "stops",
-            joinColumns = @JoinColumn(name = "route_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id")
-    )
-    private List<Customer> customers;
-
+    @JoinTable(name = "stop", joinColumns = @JoinColumn(name = "route_id"), inverseJoinColumns = @JoinColumn(name = "id"))
+    private List<Stop> stops;
 
     public String getCode() {
         return code;
@@ -57,19 +53,19 @@ public class Route extends AbstractEntity {
         this.path = path;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
-    }
-
     public Vehicle getVehicle() {
         return vehicle;
     }
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public List<Stop> getStops() {
+        return stops;
+    }
+
+    public void setStops(List<Stop> stops) {
+        this.stops = stops;
     }
 }

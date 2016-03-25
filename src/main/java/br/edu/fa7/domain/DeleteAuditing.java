@@ -1,9 +1,11 @@
 package br.edu.fa7.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
+@Table(name = "delete_auditing")
 public class DeleteAuditing extends AbstractEntity {
     private String entity;
     private Integer entityId;

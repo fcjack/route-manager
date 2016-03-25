@@ -7,7 +7,7 @@ import javax.persistence.Table;
  * Created by jackson on 3/23/16.
  */
 @Entity
-@Table(name = "vehicle", schema = "routeManager")
+@Table(name = "vehicle")
 public class Vehicle extends AbstractEntity {
 
     private String code;

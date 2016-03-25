@@ -30,6 +30,7 @@ public class GenericDao<T extends AbstractEntity> {
 
     public List<T> list() {
         Criteria criteria = getCurrentSession().createCriteria(getRecordType());
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
     }
 

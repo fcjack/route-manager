@@ -7,6 +7,7 @@ import java.util.Set;
  * Created by jackson on 3/23/16.
  */
 @Entity
+@Table(name = "driver")
 public class Driver extends AbstractEntity {
 
     private String name;

@@ -3,11 +3,13 @@ package br.edu.fa7.domain;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 /**
  * Created by jackson on 3/23/16.
  */
 @Entity
+@Table(name = "customer")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Customer extends AbstractEntity {
 
