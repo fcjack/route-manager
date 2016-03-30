@@ -1,5 +1,6 @@
 package br.edu.fa7.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -10,7 +11,10 @@ import javax.persistence.Table;
 @Table(name = "vehicle")
 public class Vehicle extends AbstractEntity {
 
+    @Column(nullable = false)
     private String code;
+
+    @Column(nullable = false)
     private String plate;
 
     public String getCode() {

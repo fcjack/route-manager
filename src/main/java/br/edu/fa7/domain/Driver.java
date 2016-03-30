@@ -10,7 +10,9 @@ import java.util.Set;
 @Table(name = "driver")
 public class Driver extends AbstractEntity {
 
+    @Column(nullable = false)
     private String name;
+
     private String registration;
 
     @ManyToMany(fetch = FetchType.EAGER)

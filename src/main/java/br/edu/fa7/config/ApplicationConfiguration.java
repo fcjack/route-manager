@@ -70,15 +70,21 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory(ComboPooledDataSource comboPooledDataSource) throws IOException {
+    public DeleteAuditingInterceptor deleteAuditing() {
+        return new DeleteAuditingInterceptor();
+    }
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactory(ComboPooledDataSource comboPooledDataSource, DeleteAuditingInterceptor interceptor) throws IOException {
         LocalSessionFactoryBean entityManagerFactoryBean = new LocalSessionFactoryBean();
         entityManagerFactoryBean.setPackagesToScan("br.edu.fa7.domain");
         entityManagerFactoryBean.setDataSource(comboPooledDataSource);
+        entityManagerFactoryBean.setEntityInterceptor(interceptor);
 
         Properties properties = new Properties();
         properties.put("hibernate.dialect", PostgreSQL9Dialect.class.getCanonicalName());
         properties.put("hibernate.default_schema", "routemanager");
-        properties.put("hibernate.show_sql", true);
+        properties.put("hibernate.show_sql", false);
         properties.put("hibernate.format_sql", true);
         properties.put("hibernate.connection.autoReconnect", true);
         properties.put("hibernate.connection.autocommit", true);

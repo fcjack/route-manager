@@ -11,13 +11,14 @@ import java.util.List;
 @Entity
 public class Route extends AbstractEntity {
 
+    @Column(nullable = false)
     private String code;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private RouteStatus routeStatus;
 
-    @OneToOne
+    @OneToOne(optional = false)
     private Vehicle vehicle;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -25,7 +26,7 @@ public class Route extends AbstractEntity {
     @OrderColumn(name = "IDX")
     private List<Position> path;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "route", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "route", cascade = CascadeType.REFRESH)
     private List<Stop> stops;
 
     public String getCode() {

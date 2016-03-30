@@ -1,9 +1,6 @@
 package br.edu.fa7.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by jackson on 3/23/16.
@@ -13,6 +10,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Customer extends AbstractEntity {
 
+    @Column(nullable = false)
     private String name;
     private String phone;
     private Double latitude;

@@ -1,36 +1,39 @@
 package br.edu.fa7.interceptor;
 
-import br.edu.fa7.dao.DeleteAuditingDao;
 import br.edu.fa7.domain.AbstractEntity;
-import br.edu.fa7.domain.DeleteAuditing;
-import org.hibernate.event.spi.PostDeleteEvent;
-import org.hibernate.event.spi.PostDeleteEventListener;
-import org.hibernate.persister.entity.EntityPersister;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.hibernate.EmptyInterceptor;
+import org.hibernate.type.Type;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class DeleteAuditingInterceptor implements PostDeleteEventListener {
+/**
+ * Created by Rubens Pinheiro on 3/23/16
+ */
+public class DeleteAuditingInterceptor extends EmptyInterceptor {
 
-    @Autowired
-    DeleteAuditingDao deleteAuditingDao;
+    private Logger logger = LogManager.getLogger(getClass());
 
     @Override
-    public void onPostDelete(PostDeleteEvent event) {
-        AbstractEntity entity = (AbstractEntity) event.getEntity();
-        Class<?> entityClass = event.getEntity().getClass();
+    public void onDelete(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+        AbstractEntity abstractEntity = (AbstractEntity) entity;
+        Class<?> entityClass = abstractEntity.getClass();
 
-        DeleteAuditing deleteAuditing = new DeleteAuditing();
-
-        deleteAuditing.setEntity(entityClass.getName());
-        deleteAuditing.setEntityId(entity.getId());
-        deleteAuditing.setDeleteDate(new Date());
-
-        deleteAuditingDao.save(deleteAuditing);
+        logger.info(String.format("Deleting entity [%s] with id [%d] by user", entityClass.getCanonicalName(), abstractEntity.getId()));
     }
 
     @Override
-    public boolean requiresPostCommitHanding(EntityPersister persister) {
-        return true;
+    public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+        AbstractEntity abstractEntity = (AbstractEntity) entity;
+        Class<?> entityClass = abstractEntity.getClass();
+
+        if (abstractEntity.getId() != null) {
+            logger.info(String.format("Updating entity [%s] with id [%d] by user", entityClass.getCanonicalName(), abstractEntity.getId()));
+        } else {
+            logger.info(String.format("Creating entity [%s] with id [%d] by user", entityClass.getCanonicalName(), abstractEntity.getId()));
+        }
+
+        return super.onSave(entity, id, state, propertyNames, types);
     }
 }

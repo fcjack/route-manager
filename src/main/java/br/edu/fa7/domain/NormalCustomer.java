@@ -1,5 +1,6 @@
 package br.edu.fa7.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "customer_id")
 public class NormalCustomer extends Customer {
 
+    @Column(nullable = false)
     private String cpf;
 
     public String getCpf() {

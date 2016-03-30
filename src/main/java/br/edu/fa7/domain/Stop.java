@@ -57,4 +57,10 @@ public class Stop extends AbstractEntity {
     public void setStatus(StopStatus status) {
         this.status = status;
     }
+
+    public void setRouteId(Integer routeId) {
+        Route route = new Route();
+        route.setId(routeId);
+        this.route = route;
+    }
 }
