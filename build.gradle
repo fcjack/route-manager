@@ -29,6 +29,4 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '2.5'
     compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.5'
 
-    //'org.apache.logging.log4j:log4j-core:2.5'
-
 }

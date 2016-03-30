@@ -8,6 +8,6 @@ public class IndexController {
 
     @RequestMapping("/")
     public String home() {
-        return "Hello Word";
+        return "Route Manager";
     }
 }

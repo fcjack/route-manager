@@ -1,0 +1,13 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="003" author="rubens">
+        <createTable tableName="delete_auditing">
+            <column name="entity" type="VARCHAR(30)"/>
+            <column name="entity_id" type="INTEGER"/>
+            <column name="delete_date" type="DATETIME"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,13 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- Cria as tabelas do sistema -->
+    <changeSet id="002" author="jackson">
+        <createTable tableName="table_of_sequence">
+            <column name="entity" type="VARCHAR(30)"/>
+            <column name="next_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
